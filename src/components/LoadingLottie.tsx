@@ -6,7 +6,7 @@ import { View, StyleSheet } from 'react-native';
 const LoadingLottie = () => (
   <View style={styles.container}>
     <LottieView
-      source={require('../../assets/loading-health.json')}
+      source={require('../../assets/Animation - 1749092439740.json')}
       autoPlay
       loop
       style={{ width: 180, height: 180 }}

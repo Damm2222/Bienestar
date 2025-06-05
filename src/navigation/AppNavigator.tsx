@@ -76,8 +76,12 @@ const AppNavigator = () => {
 
   // Función para cerrar sesión
   const handleLogout = () => {
-    setUser(null);
-    setIsLogged(false);
+    setLoadingTransition(true);
+    setTimeout(() => {
+      setUser(null);
+      setIsLogged(false);
+      setLoadingTransition(false);
+    }, 1000); // 1 segundo de animación
   };
 
   // Función para manejar el login con animación de carga
