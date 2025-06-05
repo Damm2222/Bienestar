@@ -2,7 +2,8 @@
 import React, { createContext, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Image } from 'react-native';
+import { Image, View } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import LoginScreen from '../screens/LoginScreen';
 import HomeScreen from '../screens/HomeScreen';
 import TipsScreen from '../screens/TipsScreen';
@@ -13,33 +14,17 @@ const Tab = createBottomTabNavigator();
 
 const homeIcon = require('../../assets/home.png');
 const heartIcon = require('../../assets/Heart.png');
+const PRIMARY = '#0a7ea4';
 
 function MainTabs({ setUser, setIsLogged }: { setUser: any, setIsLogged: any }) {
   return (
     <Tab.Navigator
+      initialRouteName="Home"
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: '#2e7d32',
       }}
     >
-      <Tab.Screen
-        name="Login"
-        children={() => <LoginScreen onLogin={userData => { setUser(userData); setIsLogged(true); }} />}
-        options={{
-          title: 'Perfil',
-          tabBarIcon: () => (
-            <Image
-              source={require('../../assets/register.png')}
-              style={{
-                width: 28,
-                height: 28,
-                marginBottom: -2,
-                resizeMode: 'contain',
-              }}
-            />
-          ),
-        }}
-      />
       <Tab.Screen
         name="Home"
         component={HomeScreen}
@@ -76,7 +61,6 @@ function MainTabs({ setUser, setIsLogged }: { setUser: any, setIsLogged: any }) 
           ),
         }}
       />
-    
     </Tab.Navigator>
   );
 }
@@ -84,6 +68,12 @@ function MainTabs({ setUser, setIsLogged }: { setUser: any, setIsLogged: any }) 
 const AppNavigator = () => {
   const [isLogged, setIsLogged] = useState(false);
   const [user, setUser] = useState<any>(null);
+
+  // Función para cerrar sesión
+  const handleLogout = () => {
+    setUser(null);
+    setIsLogged(false);
+  };
 
   if (!isLogged) {
     return (
@@ -102,6 +92,17 @@ const AppNavigator = () => {
     <UserContext.Provider value={user}>
       <NavigationContainer>
         <MainTabs setUser={setUser} setIsLogged={setIsLogged} />
+        {/* Botón flotante de logout con icono */}
+        <View style={{ position: 'absolute', top: 56, right: 24, zIndex: 10 }}>
+          <Ionicons
+            name="log-out-outline"
+            size={32}
+            color={PRIMARY}
+            onPress={handleLogout}
+            style={{ backgroundColor: 'transparent', borderRadius: 20, padding: 6 }}
+            accessibilityLabel="Cerrar sesión"
+          />
+        </View>
       </NavigationContainer>
     </UserContext.Provider>
   );

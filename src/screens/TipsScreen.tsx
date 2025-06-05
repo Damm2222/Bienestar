@@ -49,6 +49,7 @@ const TipsScreen: React.FC = () => {
       }
       try {
         const prompt = `Dame 5 consejos de salud física y mental personalizados para una persona llamada ${user?.nombre || 'Usuario'}, de ${user?.edad || '30'} años, con una estatura de ${user?.altura || '170'} cm${user?.enfermedad ? ` y que padece ${user.enfermedad}` : ''}.`;
+        console.log('Prompt enviado a OpenAI:', prompt);
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
           method: 'POST',
           headers: {
@@ -60,9 +61,12 @@ const TipsScreen: React.FC = () => {
             messages: [{ role: 'user', content: prompt }],
           }),
         });
+        console.log('Status OpenAI:', response.status);
         const raw = await response.text();
+        console.log('Respuesta RAW OpenAI:', raw);
         const data = JSON.parse(raw);
         const content = data.choices?.[0]?.message?.content || '';
+        console.log('Contenido IA:', content);
         let splitTips: string[] = [];
         if (content.includes('\n')) {
           splitTips = content
@@ -77,6 +81,7 @@ const TipsScreen: React.FC = () => {
         }
         setTips(splitTips.length ? splitTips : defaultTips);
       } catch (err: any) {
+        console.error('Error al consultar OpenAI:', err);
         setError('No se pudo conectar con el servicio de IA. Mostrando consejos por defecto.');
         setTips(defaultTips);
       } finally {

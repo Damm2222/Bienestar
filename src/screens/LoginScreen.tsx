@@ -21,6 +21,15 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
   const handleContinue = () => {
     if (nombre && edad && altura && peso) {
       onLogin({ nombre, edad, altura, peso, enfermedad });
+      // Navegar a Home después del login
+      // Si se usa tabs, cambiar la tab activa a Home
+      // Usar navigation si está disponible
+      if (typeof window !== 'undefined' && window.location) {
+        // No hace nada en web
+      } else {
+        // En React Navigation, cambiar la tab activa
+        // Esto se maneja en AppNavigator al cambiar isLogged
+      }
     }
   };
 
@@ -61,7 +70,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
         onChangeText={setEnfermedad}
       />
       <View style={styles.button}>
-        <Button title="Continuar" onPress={handleContinue} color="#fff" disabled={!nombre || !edad || !altura || !peso} />
+        <Button title="Continuar" onPress={handleContinue} />
       </View>
     </ScrollView>
   );
@@ -101,7 +110,7 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 12,
-    backgroundColor: PRIMARY,
+    backgroundColor: 'transparent', // Fondo transparente para el botón
     borderRadius: 12,
     overflow: 'hidden',
     width: '100%',
