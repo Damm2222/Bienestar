@@ -17,6 +17,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
   const [altura, setAltura] = useState('');
   const [peso, setPeso] = useState('');
   const [enfermedad, setEnfermedad] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
 
   const handleContinue = () => {
     if (nombre && edad && altura && peso) {
@@ -30,6 +31,9 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
         // En React Navigation, cambiar la tab activa
         // Esto se maneja en AppNavigator al cambiar isLogged
       }
+    } else {
+      setShowAlert(true);
+      setTimeout(() => setShowAlert(false), 2500);
     }
   };
 
@@ -69,6 +73,9 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
         value={enfermedad}
         onChangeText={setEnfermedad}
       />
+      {showAlert && (
+        <Text style={styles.alert}>Por favor, completa todos los datos obligatorios.</Text>
+      )}
       <View style={styles.button}>
         <Button title="Continuar" onPress={handleContinue} />
       </View>
@@ -115,6 +122,13 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     width: '100%',
     maxWidth: 350,
+  },
+  alert: {
+    color: '#d32f2f',
+    fontSize: 15,
+    marginBottom: 10,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
 
