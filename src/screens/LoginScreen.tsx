@@ -5,6 +5,12 @@ interface LoginScreenProps {
   onLogin: (user: { nombre: string; edad: string; altura: string; peso: string; enfermedad?: string }) => void;
 }
 
+const PRIMARY = '#0a7ea4';
+const BACKGROUND = '#f6fcff';
+const CARD = '#e3f6f5';
+const INPUT_BG = '#f9f9f9';
+const TEXT = '#222';
+
 const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
   const [nombre, setNombre] = useState('');
   const [edad, setEdad] = useState('');
@@ -54,7 +60,9 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
         value={enfermedad}
         onChangeText={setEnfermedad}
       />
-      <Button title="Continuar" onPress={handleContinue} disabled={!nombre || !edad || !altura || !peso} />
+      <View style={styles.button}>
+        <Button title="Continuar" onPress={handleContinue} color="#fff" disabled={!nombre || !edad || !altura || !peso} />
+      </View>
     </ScrollView>
   );
 };
@@ -65,24 +73,39 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 24,
-    backgroundColor: '#fff',
+    backgroundColor: BACKGROUND,
+    paddingTop: 56, // Unifica el padding superior con el resto de pantallas
   },
   title: {
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: 'bold',
     marginBottom: 32,
-    color: '#2e7d32',
+    color: PRIMARY,
+    letterSpacing: 1.2,
   },
   input: {
     width: '100%',
     maxWidth: 350,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    padding: 12,
-    marginBottom: 16,
-    fontSize: 16,
-    backgroundColor: '#f9f9f9',
+    borderWidth: 0,
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 18,
+    fontSize: 17,
+    backgroundColor: INPUT_BG,
+    shadowColor: PRIMARY,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.06,
+    shadowRadius: 4,
+    elevation: 1,
+    color: TEXT,
+  },
+  button: {
+    marginTop: 12,
+    backgroundColor: PRIMARY,
+    borderRadius: 12,
+    overflow: 'hidden',
+    width: '100%',
+    maxWidth: 350,
   },
 });
 

@@ -10,6 +10,11 @@ const tips = [
   'Evita el estrés y practica técnicas de relajación.',
 ];
 
+const PRIMARY = '#0a7ea4';
+const BACKGROUND = '#f6fcff';
+const CARD = '#e3f6f5';
+const TEXT = '#222';
+
 const HealthTipsList: React.FC = () => (
   <FlatList
     data={tips}
@@ -24,18 +29,28 @@ const HealthTipsList: React.FC = () => (
 );
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: BACKGROUND,
+    paddingTop: 24,
+  },
   list: {
     padding: 24,
   },
   tipContainer: {
     marginBottom: 16,
-    backgroundColor: '#e8f5e9',
-    borderRadius: 8,
-    padding: 16,
+    backgroundColor: CARD,
+    borderRadius: 12,
+    padding: 18,
+    shadowColor: PRIMARY,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.06,
+    shadowRadius: 4,
+    elevation: 1,
   },
   tipText: {
-    fontSize: 16,
-    color: '#333',
+    fontSize: 17,
+    color: TEXT,
   },
 });
 

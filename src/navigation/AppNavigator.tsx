@@ -14,7 +14,7 @@ const Tab = createBottomTabNavigator();
 const homeIcon = require('../../assets/home.png');
 const heartIcon = require('../../assets/Heart.png');
 
-function MainTabs() {
+function MainTabs({ setUser, setIsLogged }: { setUser: any, setIsLogged: any }) {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -22,6 +22,24 @@ function MainTabs() {
         tabBarActiveTintColor: '#2e7d32',
       }}
     >
+      <Tab.Screen
+        name="Login"
+        children={() => <LoginScreen onLogin={userData => { setUser(userData); setIsLogged(true); }} />}
+        options={{
+          title: 'Perfil',
+          tabBarIcon: () => (
+            <Image
+              source={require('../../assets/register.png')}
+              style={{
+                width: 28,
+                height: 28,
+                marginBottom: -2,
+                resizeMode: 'contain',
+              }}
+            />
+          ),
+        }}
+      />
       <Tab.Screen
         name="Home"
         component={HomeScreen}
@@ -58,6 +76,7 @@ function MainTabs() {
           ),
         }}
       />
+    
     </Tab.Navigator>
   );
 }
@@ -82,7 +101,7 @@ const AppNavigator = () => {
   return (
     <UserContext.Provider value={user}>
       <NavigationContainer>
-        <MainTabs />
+        <MainTabs setUser={setUser} setIsLogged={setIsLogged} />
       </NavigationContainer>
     </UserContext.Provider>
   );
